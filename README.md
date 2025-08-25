@@ -41,6 +41,11 @@ BOT_TOKEN=your_bot_token_here
 ADMIN_CHAT_ID=your_telegram_user_id
 ```
 
+### 4. Muhim eslatma
+- Bot **Worker process** sifatida ishlaydi (web emas)
+- Healthcheck kerak emas
+- Avtomatik restart va monitoring mavjud
+
 ## 📱 Foydalanish
 
 ### Foydalanuvchi uchun:
@@ -66,7 +71,7 @@ tuniningbot/
 ├── handlers.py          # Xabar boshqaruvchilari
 ├── utils.py             # Yordamchi funksiyalar
 ├── requirements.txt     # Kerakli paketlar
-├── Procfile            # Railway deployment
+├── Procfile            # Railway deployment (worker)
 ├── railway.json        # Railway sozlamalari
 ├── runtime.txt         # Python versiyasi
 └── README.md           # Ushbu fayl
@@ -100,6 +105,11 @@ tuniningbot/
 1. Railway da environment variables to'g'ri sozlanganini tekshiring
 2. Bot token to'g'ri kiritilganini tekshiring
 3. Railway logs ni ko'ring
+4. **Worker process** sifatida ishlayotganini tekshiring
+
+### Healthcheck xatosi:
+- Bu normal holat, bot web server emas
+- Bot ishlayotgan bo'lsa, healthcheck xatosi tashvish qilmasin
 
 ### Xizmatlar ko'rinmayapti:
 1. `config.py` dagi ma'lumotlarni tekshiring
@@ -118,4 +128,4 @@ MIT License
 
 ---
 
-**Eslatma**: Bu bot Railway platformasida ishlaydi va 24/7 mavjud. Avtomatik restart va monitoring bilan ta'minlangan.
+**Eslatma**: Bu bot Railway platformasida **Worker process** sifatida ishlaydi va 24/7 mavjud. Avtomatik restart va monitoring bilan ta'minlangan. Healthcheck xatosi normal holat, chunki bot web server emas.
