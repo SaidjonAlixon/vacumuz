@@ -464,7 +464,7 @@ async def callback_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 await query.edit_message_text("👥 Hozircha foydalanuvchilar yo'q.")
                 return
             
-            text = f"👥 **Foydalanuvchilar**\n\n📊 Jami: {len(users)} ta\n\n**So'nggi 10 ta foydalanuvchi:**"
+            text = "👥 **Foydalanuvchilar**\n\n📊 Jami: " + str(len(users)) + " ta\n\n**So'nggi 10 ta foydalanuvchi:**"
             
             for user in users[:10]:
                 text += f"\n\n👤 **{user.full_name}**"
@@ -584,11 +584,14 @@ async def admin_order_detail_command(update: Update, context: ContextTypes.DEFAU
     items = order_data['items']
     user = db.get_user(order.user_id)
     
+    user_name = user.full_name if user else 'Noma\'lum'
+    user_username = user.username if user and user.username else 'Noma\'lum'
+    
     text = f"""📋 **Buyurtma tafsilotlari**
 
 🆔 **ID:** `{order.order_id}`
-👤 **Mijoz:** {user.full_name if user else 'Noma\\'lum'}
-📱 **Username:** @{user.username if user and user.username else 'Noma\\'lum'}
+👤 **Mijoz:** {user_name}
+📱 **Username:** @{user_username}
 🆔 **User ID:** `{order.user_id}`
 
 🚗 **Mashina:**
