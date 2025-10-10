@@ -468,7 +468,10 @@ async def callback_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             
             for user in users[:10]:
                 text += f"\n\n👤 **{user.full_name}**"
-                text += f"\n📱 @{user.username}" if user.username else "\n📱 Username yo'q"
+                if user.username:
+                    text += f"\n📱 @{user.username}"
+                else:
+                    text += "\n📱 Username yo'q"
                 text += f"\n🆔 ID: `{user.user_id}`"
                 text += f"\n📅 {user.created_at[:10]}"
             
