@@ -584,8 +584,8 @@ async def admin_order_detail_command(update: Update, context: ContextTypes.DEFAU
     text = f"""📋 **Buyurtma tafsilotlari**
 
 🆔 **ID:** `{order.order_id}`
-👤 **Mijoz:** {user.full_name if user else 'Noma\'lum'}
-📱 **Username:** @{user.username if user and user.username else 'Noma\'lum'}
+👤 **Mijoz:** {user.full_name if user else 'Noma\\'lum'}
+📱 **Username:** @{user.username if user and user.username else 'Noma\\'lum'}
 🆔 **User ID:** `{order.user_id}`
 
 🚗 **Mashina:**
