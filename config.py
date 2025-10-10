@@ -6,8 +6,12 @@ load_dotenv()
 # Bot token
 BOT_TOKEN = os.getenv("BOT_TOKEN", "PUT_YOUR_TOKEN_HERE")
 
-# Admin chat ID
-ADMIN_CHAT_ID = int(os.getenv("ADMIN_CHAT_ID", "111111111"))
+# Admin chat ID (agar vergul bilan bo'lsa, birinchi ID ni oladi)
+admin_ids_str = os.getenv("ADMIN_CHAT_ID", "111111111")
+if "," in admin_ids_str:
+    ADMIN_CHAT_ID = int(admin_ids_str.split(",")[0].strip())
+else:
+    ADMIN_CHAT_ID = int(admin_ids_str)
 
 # Brendlar va modellar (kuzov turi bilan)
 BRANDS = {
