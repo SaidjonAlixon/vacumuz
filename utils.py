@@ -9,7 +9,7 @@ def cart_text(cart) -> str:
         "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
         f"🏷️ **Brend:** {cart.brand}",
         f"🚙 **Model:** {cart.model}",
-        f"🚐 **Kuzov:** {BODY_TYPES.get(cart.body, '')}",
+        f"🚐 **Kuzov turi:** {BODY_TYPES.get(cart.body, '')}",
         "",
         "🔧 **Tanlangan xizmatlar:**"
     ]
@@ -38,7 +38,7 @@ def order_summary_text(cart, order_id: str) -> str:
         f"🆔 **Buyurtma ID:** `{order_id}`",
         f"🏷️ **Brend:** {cart.brand}",
         f"🚙 **Model:** {cart.model}",
-        f"🚐 **Kuzov:** {BODY_TYPES.get(cart.body, '')}",
+        f"🚐 **Kuzov turi:** {BODY_TYPES.get(cart.body, '')}",
         "",
         "🔧 **Xizmatlar:**"
     ]
@@ -70,7 +70,7 @@ def admin_order_text(cart, order_id: str, user_info: dict) -> str:
         "",
         f"🏷️ **Brend:** {cart.brand}",
         f"🚙 **Model:** {cart.model}",
-        f"🚐 **Kuzov:** {BODY_TYPES.get(cart.body, '')}",
+        f"🚐 **Kuzov turi:** {BODY_TYPES.get(cart.body, '')}",
         "",
         "🔧 **Xizmatlar:**"
     ]
@@ -111,18 +111,28 @@ def brand_selection_text() -> str:
 
 def model_selection_text(brand: str) -> str:
     """Model tanlash matni"""
-    return f"✅ **Brend:** {brand}\n\n🚙 **Model tanlang:**\n\n{brand} brendining modellaridan birini tanlang:"
+    return f"✅ **Brend:** {brand}\n\n🚙 **Model tanlang:**\n\n{brand} brendining modellaridan birini tanlang. Model tanlaganingizdan so'ng kuzov turi avtomatik aniqlanadi:"
 
 
-def body_selection_text(model: str) -> str:
-    """Kuzov turi tanlash matni"""
-    return f"✅ **Model:** {model}\n\n🚐 **Kuzov turini tanlang:**\n\nAvtomobilingiz kuzov turini tanlang:"
 
 
-def services_selection_text(body_type: str) -> str:
+def services_selection_text(body_type: str, brand: str = "", model: str = "") -> str:
     """Xizmatlar tanlash matni"""
     body_name = BODY_TYPES.get(body_type, '')
-    return f"✅ **Kuzov:** {body_name}\n\n🔧 **Xizmatlarni tanlang:**\n\nKerakli xizmatlarni tanlang (bo'limlar bo'yicha sahifalangan):"
+    
+    lines = [f"✅ **Kuzov turi:** {body_name}"]
+    
+    if brand and model:
+        lines.append(f"🚗 **Mashina:** {brand} {model}")
+    
+    lines.extend([
+        "",
+        "🔧 **Xizmatlarni tanlang:**",
+        "",
+        "Kerakli xizmatlarni tanlang (bo'limlar bo'yicha sahifalangan):"
+    ])
+    
+    return "\n".join(lines)
 
 
 def cart_empty_text() -> str:

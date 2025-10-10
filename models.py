@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from typing import List, Dict, Tuple
-from config import SERVICES, BODY_TYPES
+from config import SERVICES, BODY_TYPES, BRANDS
 
 
 @dataclass
@@ -8,12 +8,21 @@ class Cart:
     """Foydalanuvchi savatchasi"""
     brand: str = ""
     model: str = ""
-    body: str = ""  # 'sedan' | 'suv' | 'minivan'
+    body: str = ""  # 'sedan' | 'suv' | 'minivan' - avtomatik aniqlanadi
     items: List[str] = None
 
     def __post_init__(self):
         if self.items is None:
             self.items = []
+
+    def set_model(self, brand: str, model: str):
+        """Model o'rnatish va kuzov turini avtomatik aniqlash"""
+        self.brand = brand
+        self.model = model
+        # Kuzov turini avtomatik aniqlash
+        self.body = BRANDS.get(brand, {}).get(model, "")
+        # Model o'zgarganida xizmatlarni tozalash
+        self.items.clear()
 
     def total(self) -> int:
         """Umumiy summani hisoblash"""

@@ -2,7 +2,8 @@ import logging
 from telegram.ext import Application, CommandHandler, CallbackQueryHandler, MessageHandler, filters
 
 from config import BOT_TOKEN
-from handlers import start_command, callback_handler, fallback_handler
+from handlers import start_command, callback_handler, fallback_handler, admin_orders_command, admin_order_detail_command
+from admin_panel import admin_panel_command
 
 # Logging sozlamalari
 logging.basicConfig(
@@ -19,8 +20,14 @@ def main():
     
     # Handlerlarni qo'shish
     application.add_handler(CommandHandler("start", start_command))
+    application.add_handler(CommandHandler("admin", admin_panel_command))
+    application.add_handler(CommandHandler("orders", admin_orders_command))
+    application.add_handler(CommandHandler("order", admin_order_detail_command))
     application.add_handler(CallbackQueryHandler(callback_handler))
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, fallback_handler))
+    application.add_handler(MessageHandler(filters.PHOTO, fallback_handler))
+    application.add_handler(MessageHandler(filters.VIDEO, fallback_handler))
+    application.add_handler(MessageHandler(filters.Document.ALL, fallback_handler))
     
     # Botni ishga tushirish
     logger.info("Bot ishga tushirilmoqda...")

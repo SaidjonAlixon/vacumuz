@@ -8,6 +8,13 @@ def start_keyboard():
     """Boshlash tugmasi"""
     return ReplyKeyboardMarkup([[KeyboardButton("🚗 Boshlash")]], resize_keyboard=True)
 
+def admin_start_keyboard():
+    """Admin uchun boshlash tugmasi"""
+    return ReplyKeyboardMarkup([
+        [KeyboardButton("🚗 Boshlash")],
+        [KeyboardButton("🔧 Admin Panel")]
+    ], resize_keyboard=True)
+
 
 def brand_keyboard():
     """Brend tanlash tugmalari"""
@@ -27,8 +34,8 @@ def brand_keyboard():
 
 def models_keyboard(brand: str):
     """Model tanlash tugmalari"""
-    models = BRANDS.get(brand, [])
-    options = [(f"🚙 {model}", f"model|{model}") for model in models]
+    models = BRANDS.get(brand, {})
+    options = [(f"🚙 {model}", f"model|{model}") for model in models.keys()]
     button_chunks = chunk_buttons(options, row=2)
     
     # Har bir qator uchun InlineKeyboardButton yaratish
@@ -45,26 +52,6 @@ def models_keyboard(brand: str):
     return InlineKeyboardMarkup(buttons)
 
 
-def body_keyboard():
-    """Kuzov turi tanlash tugmalari"""
-    options = [
-        (f"🚗 {BODY_TYPES['sedan']}", "body|sedan"),
-        (f"🚙 {BODY_TYPES['suv']}", "body|suv"),
-        (f"🚐 {BODY_TYPES['minivan']}", "body|minivan"),
-    ]
-    button_chunks = chunk_buttons(options, row=1)
-    
-    # Har bir qator uchun InlineKeyboardButton yaratish
-    buttons = []
-    for row in button_chunks:
-        row_buttons = []
-        for text, data in row:
-            row_buttons.append(InlineKeyboardButton(text, callback_data=data))
-        buttons.append(row_buttons)
-    
-    buttons.append([InlineKeyboardButton("⬅️ Orqaga", callback_data="back|models")])
-    
-    return InlineKeyboardMarkup(buttons)
 
 
 def services_keyboard(body: str, page: int = 0, selected_services: List[str] = None):
@@ -114,7 +101,7 @@ def services_keyboard(body: str, page: int = 0, selected_services: List[str] = N
     ])
     
     # Orqaga qaytish
-    buttons.append([InlineKeyboardButton("⬅️ Orqaga", callback_data="back|body")])
+    buttons.append([InlineKeyboardButton("⬅️ Orqaga", callback_data="back|models")])
     
     return InlineKeyboardMarkup(buttons)
 
@@ -148,7 +135,6 @@ def edit_cart_keyboard():
             InlineKeyboardButton("🚙 Model", callback_data="edit|model")
         ],
         [
-            InlineKeyboardButton("🚐 Kuzov", callback_data="edit|body"),
             InlineKeyboardButton("🔧 Xizmatlar", callback_data="edit|services")
         ],
         [InlineKeyboardButton("⬅️ Orqaga", callback_data="cart|show")]
