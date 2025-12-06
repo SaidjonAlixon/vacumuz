@@ -118,9 +118,7 @@ def model_selection_text(brand: str) -> str:
 
 def services_selection_text(body_type: str, brand: str = "", model: str = "") -> str:
     """Xizmatlar tanlash matni"""
-    body_name = BODY_TYPES.get(body_type, '')
-    
-    lines = [f"✅ **Kuzov turi:** {body_name}"]
+    lines = []
     
     if brand and model:
         lines.append(f"🚗 **Mashina:** {brand} {model}")
